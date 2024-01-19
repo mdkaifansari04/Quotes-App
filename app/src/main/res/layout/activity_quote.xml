@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background1"
+    android:gravity="center"
+    tools:context=".Quote_Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <TextView
+            android:id="@+id/tvQuote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/bevan"
+            android:gravity="center"
+            android:text="hello"
+            android:textColor="@color/secondaryWhite"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/josefin_sans_bold"
+            android:gravity="center"
+            android:text="@string/quot_success_quot"
+            android:textColor="@color/secondaryWhite"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/tvAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/md_kaif_ansari"
+            android:textColor="#8F8E8E"
+            android:textColorHint="#514F4F"
+            android:textColorLink="#8E8E8E"
+            android:textSize="24sp" />
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:background="#6CC51F"
+            android:drawableEnd="@drawable/shareicon"
+            android:drawableTint="#fff"
+            android:fontFamily="@font/advent_pro_light"
+            android:gravity="center"
+            android:paddingEnd="30dp"
+            android:selectAllOnFocus="false"
+            android:shadowRadius="@integer/material_motion_duration_medium_1"
+            android:text="@string/share"
+            android:textAllCaps="false"
+            android:textColor="#f6f6f6"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            tools:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+
+</RelativeLayout>
