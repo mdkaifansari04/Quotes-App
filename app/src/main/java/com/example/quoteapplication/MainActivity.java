@@ -1,19 +1,20 @@
 package com.example.quoteapplication;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,31 +25,48 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         startButton = findViewById(R.id.startButton);
+
+        OkHttpClient client = new OkHttpClient();
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Quote_Activity.class);
-                try {
-                    System.out.println("Test 3");
-                    URL url = new URL("https://api.api-ninjas.com/v1/quotes?category=happiness");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestProperty("accept", "application/json");
-                    connection.setRequestProperty("X-Api-Key", "NOOo0F+WUVL5TlWw==WzrIzEjnqgaWb2lV");
-                    InputStream responseStream = connection.getInputStream();
 
-                    ObjectMapper mapper = new ObjectMapper();
-                    JsonNode root = mapper.readTree(responseStream);
-
-                    String quote = root.path(0).path("quote").asText();
-                    String author = root.path(0).path("author").asText();
-                    String category = root.path(0).path("category").asText();
-                    System.out.println("Quote : "+ quote);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (Build.VERSION.SDK_INT > 9) {
+                Log.d("test", "test 1");
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
                 }
-                startActivity(intent);
+
+                if (Build.VERSION.SDK_INT > 9) {
+                    Log.d("test","test2");
+                    StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                    StrictMode.setThreadPolicy(policy);
+                }
+                Log.d("test", "test3");
+                Request request = new Request.Builder()
+                        .url("https://api.api-ninjas.com/v1/quotes?category=success")
+                        .header("X-Api-Key", "H4gFrmOcPmKunvNTj6EP4QIaDqnftQTAcI3TSl3K")
+                        .build();
+
+                try (Response response = client.newCall(request).execute()) {
+
+                    String res = response.body().string();
+
+                    String quote = res.split("quote")[1].split(":")[1].split("\\.")[0].replace("\"", "");
+                    String author = res.split("author")[1].split(":")[1].split(",")[0].replace("\"", "");
+
+                    Log.d("test", "authoer" +author);
+                    Intent intent = new Intent(MainActivity.this, Quote_Activity.class);
+                    intent.putExtra("quote", quote);
+                    intent.putExtra("author", author);
+                    startActivity(intent);
+
+
+                } catch (IOException e) {
+                    Log.e("test", "Error in network request", e);
+                }
             }
         });
-
     }
+
 }
